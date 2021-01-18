@@ -1,14 +1,16 @@
 <template>
-  <form class="bg-white mt-10 mx-auto px-6 py-10 shadow-md rounded text-gray-700" @submit.prevent="submitForm">
+  <form class="bg-white mt-10 mx-auto px-6 py-10 shadow-md rounded text-gray-700" >
       <h1 class="text-3xl font-black mb-3 text-center">Log In</h1>
       <hr class="mb-3">
       <div class="mb-10">
           <label for="email" class="py-4">E-mail</label>
-          <input type="email" id="email" v-model="loginForm.email" class="min-w-full px-2 py-2 shadow-md outline-none border rounded" placeholder="email address">
+          <ValidationProvider mode="lazy" rules="required|email">
+            <input type="email" id="email" v-model.trim="loginForm.email" class="min-w-full px-2 py-2 shadow-md outline-none border rounded" placeholder="email address">
+          </ValidationProvider>
       </div>
       <div class="mb-10">
           <label for="password" class="py-4">Password</label>
-          <input type="password" id="password" v-model="loginForm.password" class="min-w-full px-2 py-2 shadow-md outline-none border rounded" placeholder="password">
+          <input type="password" id="password" v-model.trim="loginForm.password" class="min-w-full px-2 py-2 shadow-md outline-none border rounded" placeholder="password">
       </div>
       <div class="mb-10 flex items-center">
         <label class="inline-flex items-center">
@@ -17,7 +19,7 @@
         </label>
       </div>
       <div class="mb-10">
-          <input type="submit" class="min-w-full text-white cursor-pointer px-2 py-2 shadow-md outline-none bg-gray-900 rounded" value="Log In">
+          <input @click.prevent="submitForm" type="submit" class="min-w-full text-white cursor-pointer px-2 py-2 shadow-md outline-none bg-gray-900 rounded" value="Log In">
       </div>
       <div class="flex justify-between px-6">
           <small class="font-bold underline">
@@ -34,7 +36,8 @@
 
 
 <script>
-import { ref } from "vue"
+import { ref } from "vue";
+
 
 export default {
     name: 'Login',
@@ -47,16 +50,13 @@ export default {
         })
 
         let submitForm = () => {
-            console.log(loginForm.value)
         }
-
 
         return {
             loginForm,
-            submitForm
+            submitForm,
         }
-    }
-
+    },
 }
 </script>
 
