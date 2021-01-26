@@ -48,6 +48,8 @@ class AuthController extends Controller
                 'telegram'
             ]),
 
+            'balance' => 0,
+
             'email' => Arr::get($request->validated(), 'email'),
             'password' => Hash::make(Arr::get($request->validated(), 'password')),
         ]);
@@ -83,7 +85,7 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        return User::where('_id', auth()->user()->id)->with('country')->with('timezone')->first();
     }
 
     /**

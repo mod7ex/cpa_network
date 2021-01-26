@@ -4,8 +4,18 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterUserRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return false;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -26,10 +36,18 @@ class RegisterUserRequest extends FormRequest
             'skype' => 'sometimes|required|string',
             'telegram' => 'sometimes|required|string',
 
-            'email' => 'required|email|unique:users,email',
+            'title' => 'sometimes',
+            'timezone_id' => 'sometimes|exists:timezones,_id',
+            'best_time_to_call' => 'sometimes|max:1|min:0',
+
             'password' => 'required|min:6|confirmed',
+
+            'payment_method_id' => 'sometimes|required|exists:payment_methods,_id',
+            'min_payout' => 'sometimes',
+            'billing_details.email' => 'sometimes|email',
         ];
     }
+
 
     public function messages()
     {

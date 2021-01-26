@@ -1,8 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\OfferController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OfferController;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\TimezoneController;
+use App\Http\Controllers\PaymentMethodController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +21,13 @@ use App\Http\Controllers\UserController;
 
 Route::apiResource('offers', OfferController::class);
 
-
 Route::apiResource('users', UserController::class);
+
+Route::apiResource('countries', CountryController::class);
+
+Route::apiResource('timezones', TimezoneController::class);
+
+Route::apiResource('paymentmethods', PaymentMethodController::class);
 
 
 Route::group([
@@ -33,6 +42,7 @@ Route::group([
     Route::post('logout', [App\Http\Controllers\AuthController::class, 'logout']);
     Route::post('refresh', [App\Http\Controllers\AuthController::class, 'refresh']);
     Route::post('me', [App\Http\Controllers\AuthController::class, 'me']);
+    Route::get('isloggedin', [App\Http\Controllers\AuthController::class, 'isLoggedIn']);
 });
 
 
@@ -44,7 +54,7 @@ Route::group([
 ], function () {
 
     Route::post('login', [App\Http\Controllers\Admins\AuthController::class, 'login']);
-    Route::post('register', [App\Http\Controllers\Admins\AuthController::class, 'register']);
+    // Route::post('register', [App\Http\Controllers\Admins\AuthController::class, 'register']);
     Route::post('logout', [App\Http\Controllers\Admins\AuthController::class, 'logout']);
     Route::post('refresh', [App\Http\Controllers\Admins\AuthController::class, 'refresh']);
     Route::post('me', [App\Http\Controllers\Admins\AuthController::class, 'me']);

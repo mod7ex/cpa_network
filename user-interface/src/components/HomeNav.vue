@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-gray-900 text-gray-300 px-5 py-5 flex justify-between items-center">
+  <nav class="bg-gray-200 text-gray-900 px-5 py-5 flex justify-between items-center shadow-lg">
 
     <router-link :to="{name: 'Home'}"><h1 class="font-black text-3xl">MouradCPA</h1></router-link>
 
@@ -8,7 +8,7 @@
 
         <div class="relative">
 
-            <button @click="isMenueVisible = !isMenueVisible" @blur="isMenueVisible = !isMenueVisible" class="bg-blue-800 rounded  flex justify-between items-center px-3 py-2 focus:outline-none hover:opacity-70">
+            <button @click="isMenueVisible = !isMenueVisible" @blur="isMenueVisible = !isMenueVisible" class="rounded  flex justify-between items-center px-3 py-2 focus:outline-none hover:opacity-70">
               <span>More ...</span>
 
               <svg class="h-4 ml-2" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129">

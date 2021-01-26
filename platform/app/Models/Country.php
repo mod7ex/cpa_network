@@ -9,6 +9,8 @@ class Country extends Model
 {
     use HasFactory;
 
+    protected $hidden = ['created_at', 'updated_at', 'offer_ids', 'details.calling_codes'];
+
     public function offers()
     {
         return $this->hasMany(Offer::class);

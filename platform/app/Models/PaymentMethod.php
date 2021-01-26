@@ -13,4 +13,15 @@ class PaymentMethod extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function getFeesAttribute($fees)
+    {
+        if ($fees['fix'] === 0 && $fees['relative'] === 0) {
+            return 0;
+        } elseif ($fees['relative'] != 0) {
+            return $fees['relative'];
+        } else {
+            return $fees['fix'];
+        }
+    }
 }
