@@ -32,41 +32,69 @@ class OfferController extends Controller
 
             return Offer::raw(function ($collection) {
                 return $collection->aggregate([
+                    // [
+                    //     '$unwind' => 
+                    //         [
+                    //         'path' => "promotion.promoters",
+                    //         'preserveNullAndEmptyArrays' => true
+                    //     ]
+                    // ],
+
+                    // [
+                    //     '$match' => [ '$or' => [
+
+                    //             [ "promotion.public" => true ],
+
+                    //             [
+                    //                 '$and' => [
+                    //                     [ "promotion.public" => false ],
+
+                    //                     [
+                    //                         '$or' => [
+                    //                             [
+                    //                                 "promotion.hidden" => false,
+                    //                             ],
+                                                
+                    //                             [
+                    //                                 '$and' => [
+                    //                                     [ "promotion.hidden" => true ],
+
+                    //                                     [
+                    //                                         "promotion.promoters" =>
+                    //                                             auth()->user()->id,
+                    //                                     ],
+                    //                                 ],
+                    //                             ],
+                    //                         ],
+                    //                     ],
+                    //                 ],
+                    //             ],
+                    //         ],
+                    //     ]
+                    // ],
+
                     [
-                        '$unwind' => [
-                            'path' => '$promotion.promoters',
-                            'preserveNullAndEmptyArrays' => true
-                        ]
-                    ],
-                    [
-                        '$match' => ['$or' => [
-                            ['promotion.public' => true],
-                            ['promotion.hidden' => false],
-                            [
-                                '$and' => [
-                                    ['promotion.hidden' => false],
-                                    ['promotion.promoters' => auth()->user()->id]
-                                ]
-                            ]
-                        ]]
-                    ],
-                    [
-                        '$group' => [
-                            '_id' => [
-                                '_id' => '$_id',
-                                'payout_type_ids' => '$payout_type_ids',
-                                'vertical_ids' => '$vertical_ids',
-                                'device_ids' => '$device_ids',
-                                'payout' => '$payout',
-                            ],
-                        ]
-                    ],
-                    [
-                        '$project' => ['_id' => 1]
+                        '$project' => [
+                            // '_id' =>  1,
+                            // 'name' =>  1,
+                            // 'payout' =>  1,
+                            // 'promotion' =>  1,
+                            // 'restriction_ids' =>  1,
+                            // 'promotion_method_ids' =>  1,
+                            // 'niche_ids' =>  1,
+                            // 'payout_type_ids' =>  1,
+                            // 'vertical_ids' =>  1,
+                            // 'device_ids' =>  1,
+                            // 'os_ids' =>  1,
+                            // 'browser_ids' =>  1,
+
+
+                            'description' =>  0,
+                            'images' =>  0,
+                            'landing_pages' =>  0,
+                        ],
                     ],
                 ]);
-            })->map(function ($offer) {
-                return $offer->_id;
             });
         }
     }
@@ -94,10 +122,10 @@ class OfferController extends Controller
      */
     public function show(Offer $offer)
     {
-        $this->authorize('view', $offer);
 
         if (Auth::guard('admin')->check()) {
-
+            
+            $this->authorize('view', $offer);
             return $offer->makeVisible(['promotion']);
         } else if (Auth::guard('api')->check()) {
 

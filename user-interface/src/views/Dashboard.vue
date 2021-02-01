@@ -1,15 +1,17 @@
 <template>
 	<div class="p-4 bg-gray-200 min-h-screen">
-		<div class="flex flex-wrap justify-center items-start">
-			<TopOffersCard class="flex-grow" />
-			<UserCard />
-		</div>
+		<Block :fit="false">
+			<div class="flex flex-wrap lg:flex-nowrap justify-evenly">
+				<TopOffersCard />
+				<UserCard />
+			</div>
+		</Block>
 
 		<hr />
 
-		<div class="flex flex-wrap justify-center">
-			<TodayClicks class="flex-grow" />
-			<TodayConversions class="flex-grow" />
+		<div class="flex flex-wrap lg:flex-nowrap justify-evenly items-start lg:p-5">
+			<TodayClicks />
+			<TodayConversions />
 		</div>
 	</div>
 	<!--  -->
@@ -18,8 +20,8 @@
 <script>
 	import UserCard from "@/components/UserCard";
 	import TopOffersCard from "@/components/TopOffersCard";
-	import TodayClicks from "@/components/TodayClicks";
-	import TodayConversions from "@/components/TodayConversions";
+	import TodayClicks from "@/components/charts/TodayClicks";
+	import TodayConversions from "@/components/charts/TodayConversions";
 
 	export default {
 		name: "Dashboard",

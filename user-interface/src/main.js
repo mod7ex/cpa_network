@@ -21,9 +21,12 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import Block from "./components/atomic/Block.vue";
 import "./assets/css/tailwind.css";
 
 const app = createApp(App);
+
+app.component("Block", Block);
 
 store.dispatch("checkMeOut").finally(() => {
 	app.use(store);

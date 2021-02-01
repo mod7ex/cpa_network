@@ -85,7 +85,7 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return User::where('_id', auth()->user()->id)->with('country')->with('timezone')->first();
+        return User::where('_id', $this->mongoId(auth()->user()->id))->with('country')->with('timezone')->first();
     }
 
     /**

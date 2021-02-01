@@ -6,8 +6,11 @@ import Home from "../views/Home.vue";
 import About from "../views/About.vue";
 import Signup from "../views/Signup.vue";
 import Login from "../views/Login.vue";
+import Stats from "../views/Stats.vue";
 import Dashboard from "../views/Dashboard.vue";
 import AccountInfo from "../views/AccountInfo.vue";
+import OffersListing from "../views/offer/OffersListing.vue";
+import OfferDetails from "../views/offer/OfferDetails.vue";
 
 const routes = [
 	{
@@ -67,6 +70,35 @@ const routes = [
 		meta: {
 			requiresAuth: true,
 			title: "Account Information",
+		},
+	},
+
+	{
+		path: "/offers-listing",
+		name: "OffersListing",
+		component: OffersListing,
+		meta: {
+			requiresAuth: true,
+			title: "Offers Listing",
+		},
+	},
+
+	{
+		path: "/offer-details/:id",
+		name: "OfferDetails",
+		component: OfferDetails,
+		meta: {
+			requiresAuth: true,
+		},
+	},
+
+	{
+		path: "/stats",
+		name: "Stats",
+		component: Stats,
+		meta: {
+			requiresAuth: true,
+			title: "statistics",
 		},
 	},
 ];

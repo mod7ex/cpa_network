@@ -67,6 +67,7 @@ class GlobalSeeder extends Seeder
     function seedVerticalsTable()
     {
         $verticals = [
+            'General',
             'Gaming',
             'Adult Gaming',
             'Apps',
@@ -137,6 +138,7 @@ class GlobalSeeder extends Seeder
     function seedPromotionMethodsTable()
     {
         $promotion_methods = [
+            'General',
             'Contextual',
             'Display',
             'Mailing',
@@ -157,6 +159,7 @@ class GlobalSeeder extends Seeder
     function seedRestrictionsTable()
     {
         $restrictions = [
+            'None',
             'No spam traffic',
             'No bot traffic',
             'No email traffic',

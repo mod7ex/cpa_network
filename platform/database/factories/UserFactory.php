@@ -11,56 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class UserFactory extends Factory
 {
-    private function getRandomCountry()
-    {
-        return Country::raw(function ($collection) {
-            return $collection->aggregate(
-                [
-                    [
-                        '$sample' => [
-                            'size' =>  1
-                        ]
-                    ],
-
-                    [
-                        '$project' => [
-                            '_id' => 1
-                        ]
-                    ],
-                ]
-            );
-        })->first();
-    }
-
-    private function getRandomTimezone()
-    {
-        return Timezone::raw(function ($collection) {
-            return $collection->aggregate(
-                [
-                    [
-                        '$sample' => [
-                            'size' =>  1
-                        ]
-                    ]
-                ]
-            );
-        })->first();
-    }
-
-    private function getRandomPaymentMethod()
-    {
-        return PaymentMethod::raw(function ($collection) {
-            return $collection->aggregate(
-                [
-                    [
-                        '$sample' => [
-                            'size' =>  1
-                        ]
-                    ]
-                ]
-            );
-        })->first();
-    }
+    use FactoryHelper;
 
     /**
      * The name of the factory's corresponding model.
@@ -76,16 +27,17 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        $paymentMethod = $this->getRandomPaymentMethod();
+        $paymentMethod = $this->getRandom(PaymentMethod::class, false);
 
         return [
+            'active' => $this->faker->boolean(95),
             'contact_infos' => [
                 'title' => $this->faker->randomElement(['Mr', 'Mrs', 'Miss']),
                 'first_name' => $this->faker->firstName(),
                 'last_name' => $this->faker->lastName(),
                 'website' => $this->faker->domainName,
-                'country_id' => $this->getRandomCountry()->id,
-                'timezone_id' => $this->getRandomTimezone()->id,
+                'country_id' => $this->getRandom(Country::class),
+                'timezone_id' => $this->getRandom(Timezone::class),
                 'street_address' => $this->faker->streetAddress,
                 'city' => $this->faker->city,
                 'region' => $this->faker->state,
@@ -106,7 +58,7 @@ class UserFactory extends Factory
                 ]
             ],
 
-            'balance' => $this->faker->numberBetween(0, 500) + (1 / $this->faker->numberBetween(1, 4)),
+            'balance' => $this->faker->numberBetween(0, 500000),
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password

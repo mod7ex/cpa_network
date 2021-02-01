@@ -51,7 +51,7 @@
 			const router = useRouter();
 
 			let loginForm = ref({
-				email: new Field("email", true, "lambert.schimmel@example.com"),
+				email: new Field("email", true, "langosh.sylvia@example.com"),
 				password: new Field("password", true, "password"),
 				remember: new Field("remember", true, false),
 			});

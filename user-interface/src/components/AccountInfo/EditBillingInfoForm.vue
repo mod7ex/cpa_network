@@ -24,13 +24,13 @@
 			</select>
 		</div>
 
-		<div class="mb-10" v-if="billingInfoForm.payout_method_id.val === '600781d80560115ad55efbcf'">
+		<div class="mb-10" v-if="billingInfoForm.payout_method_id.val === '60107d6a4dcc881c7547bd3e'">
 			<label for="email" class="py-4">Paypal E-mail</label>
 			<input v-model.trim="billingInfoForm.email.val" type="text" id="email" :class="{ 'bg-red-100': !billingInfoForm.email.is_valid }" class="min-w-full px-2 py-2 shadow-md outline-none border rounded" placeholder="paypal email" />
 			<small class="text-red-400" v-for="(err, index) in billingInfoForm.email.errors" :key="index">{{ err }}, </small>
 		</div>
 
-		<div class="mb-10" v-if="billingInfoForm.payout_method_id.val === '600781d80560115ad55efbd0'">
+		<div class="mb-10" v-if="billingInfoForm.payout_method_id.val === '60107d6a4dcc881c7547bd3f'">
 			<label for="email" class="py-4">Paxum E-mail</label>
 			<input v-model.trim="billingInfoForm.email.val" type="text" id="email" :class="{ 'bg-red-100': !billingInfoForm.email.is_valid }" class="min-w-full px-2 py-2 shadow-md outline-none border rounded" placeholder="paxum email" />
 			<small class="text-red-400" v-for="(err, index) in billingInfoForm.email.errors" :key="index">{{ err }}, </small>
@@ -91,6 +91,7 @@
 
 			let min_payouts = ref([]);
 			let choosePM = () => {
+				console.log(paymentMethodOptions.value);
 				min_payouts.value = paymentMethodOptions.value.find((elm) => {
 					return elm._id === billingInfoForm.value.payout_method_id.val;
 				}).min_payout;

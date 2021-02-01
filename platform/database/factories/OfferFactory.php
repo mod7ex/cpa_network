@@ -16,26 +16,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OfferFactory extends Factory
 {
-    public function getRandom($model)
-    {
-        return $model::raw(function ($collection) {
-            return $collection->aggregate([
-                [
-                    '$project' => [
-                        '_id' => 1
-                    ]
-                ],
-
-                // [
-                //     '$sample' => [
-                //         'size' => $this->faker->numberBetween(0, $amount)
-                //     ]
-                // ]
-            ]);
-        })->map(function ($classInstance) {
-            return $classInstance->id;
-        })->toArray();
-    }
+    use FactoryHelper;
 
     /**
      * The name of the factory's corresponding model.
@@ -54,22 +35,36 @@ class OfferFactory extends Factory
         $publicBool = $this->faker->boolean(40);
         $hiddenBool = $publicBool ? false : $this->faker->boolean(50);
 
+        $promotion = array();
+        if($publicBool){
+            $promotion['public'] = true;
+        }else{
+            $promotion['public'] = false;
+            $promotion['promoters'] = $this->getRandomIds(User::class, 3) ;
+            if($hiddenBool){
+                $promotion['hidden'] = true;
+            } else {
+                $promotion['hidden'] = false;
+                $promotion['pending_promoters'] = $this->getRandomIds(User::class, 3);
+                $promotion['rejected_promoters'] = $this->getRandomIds(User::class, 2);
+            }
+        }
+
         return [
-            'restriction_ids' => $this->faker->randomElements($this->getRandom(Restriction::class)),
-            'promotion_method_ids' => $this->faker->randomElements($this->getRandom(PromotionMethod::class)),
+            'restriction_ids' => $this->getRandomIds(Restriction::class, 3),
+            'promotion_method_ids' => $this->getRandomIds(PromotionMethod::class, 3),
             'niche_ids' => [],
-            // 'niche_ids' => $this->faker->randomElements($this->getRandom(Niche::class)),
-            'payout_type_ids' => $this->faker->randomElements($this->getRandom(PayoutType::class)),
-            'vertical_ids' => $this->faker->randomElements($this->getRandom(Vertical::class)),
-            'device_ids' => $this->faker->randomElements($this->getRandom(Device::class)),
-            'os_ids' =>  $this->faker->randomElements($this->getRandom(Os::class)),
-            'browser_ids' =>  $this->faker->randomElements($this->getRandom(Browser::class)),
-            'country_ids' =>  $this->faker->randomElements($this->getRandom(Country::class)),
+            // 'niche_ids' => $this->getRandomIds(Niche::class, 2),
+            'payout_type_ids' => $this->getRandomIds(PayoutType::class, 1),
+            'vertical_ids' => $this->getRandomIds(Vertical::class, 2),
+            'device_ids' => $this->getRandomIds(Device::class, 3),
+            'os_ids' =>  $this->getRandomIds(Os::class, 2),
+            'browser_ids' =>  $this->getRandomIds(Browser::class, 3),
+            'country_ids' =>  $this->getRandomIds(Country::class, 7),
 
             'name' => $this->faker->text(13),
-            // 'Id' => $this->faker->numberBetween(999, 9999),
             'description' => $this->faker->text(),
-            'payout' => $this->faker->numberBetween(10, 50000), # in cents not us$
+            'payout' => $this->faker->numberBetween(10, 50000), # in cents not us$ (0.1$ - 500$)
             'landing_pages' => [
                 $this->faker->url,
                 $this->faker->url,
@@ -78,13 +73,7 @@ class OfferFactory extends Factory
                 $this->faker->url,
                 $this->faker->url,
             ],
-            'promotion' => [
-                'public' => $publicBool,
-                'hidden' => $hiddenBool,
-                'promoters' => !$publicBool ? $this->faker->randomElements($this->getRandom(User::class), 5) : [],
-                'pending_promoters' => (!$publicBool && !$hiddenBool) ? $this->faker->randomElements($this->getRandom(User::class), 5) : [],
-                'rejected_promoters' => (!$publicBool && !$hiddenBool) ? $this->faker->randomElements($this->getRandom(User::class), 5) : [],
-            ]
+            'promotion' => $promotion
         ];
     }
 }

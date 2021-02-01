@@ -58,13 +58,13 @@
 							</router-link>
 						</li>
 						<li class="mb-3 cursor-pointer transition duration-500 ease-in-out hover:bg-gray-300 px-6 py-2">
-							<router-link :to="{ name: '' }" class="flex">
+							<router-link :to="{ name: 'OffersListing' }" class="flex">
 								<svg class="fill-current mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 12c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm9 0c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm9 0c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z" /></svg>
 								<span>Offers Listing</span>
 							</router-link>
 						</li>
 						<li class="mb-3 cursor-pointer transition duration-500 ease-in-out hover:bg-gray-300 px-6 py-2">
-							<router-link :to="{ name: '' }" class="flex">
+							<router-link :to="{ name: 'Stats' }" class="flex">
 								<svg class="fill-current mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5 19h-4v-8h4v8zm6 0h-4v-18h4v18zm6 0h-4v-12h4v12zm6 0h-4v-4h4v4zm1 2h-24v2h24v-2z" /></svg>
 								<span>Stats</span>
 							</router-link>

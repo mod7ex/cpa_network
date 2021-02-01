@@ -48,25 +48,22 @@ class Handler extends ExceptionHandler
     }
 
 
+    // public function render($request, Throwable $e)
+    // {
+    //     if ($e instanceof NotFoundHttpException) {
+    //         return response()->json(['message' => 'Page Not Found'], $e->getStatusCode());
+    //     }
 
-    public function render($request, Throwable $e)
-    {
-        if ($e instanceof NotFoundHttpException) {
-            return response()->json(['message' => 'Page Not Found'], $e->getStatusCode());
-        }
+    //     if ($e instanceof ValidationException) {
+    //         return response()->json([
+    //             'message' => $e->getMessage(),
+    //             'errors' => $e->validator->errors(),
+    //             'redirectTo' => $e->redirectTo,
+    //         ], $e->status);
+    //     }
 
-        if ($e instanceof ValidationException) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'errors' => $e->validator->errors(),
-                'redirectTo' => $e->redirectTo,
-            ], $e->status);
-        }
-
-        if ($e instanceof QueryException) {
-            return response()->json(['message' => 'Something went Wrong while creating the instance'], 500);
-        }
-
-        return response()->json(['message' => $e->getMessage()], 500);
-    }
+    //     if ($e instanceof QueryException) {
+    //         return response()->json(['message' => 'Something went Wrong while creating the instance'], 500);
+    //     }
+    // }
 }

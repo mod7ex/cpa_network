@@ -1,12 +1,21 @@
 <?php
 
+use App\Models\Os;
+use App\Models\Niche;
+use App\Models\Device;
+use App\Models\Browser;
+use App\Models\Country;
+use App\Models\Vertical;
+use App\Models\Restriction;
+use App\Models\PayoutType;
+use App\Models\PromotionMethod;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\TimezoneController;
 use App\Http\Controllers\PaymentMethodController;
-
+use App\Http\Controllers\StatsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,3 +68,23 @@ Route::group([
     Route::post('refresh', [App\Http\Controllers\Admins\AuthController::class, 'refresh']);
     Route::post('me', [App\Http\Controllers\Admins\AuthController::class, 'me']);
 });
+
+
+Route::get('offersfilter', function(){
+    return [
+        'promotion_methods' =>PromotionMethod::all(),
+        'niches' =>Niche::all(),
+        'payout_types' =>PayoutType::all(),
+        'verticals' =>Vertical::all(),
+        'devices' =>Device::all(),
+        'oss' =>Os::all(),
+        'browsers' =>Browser::all(),
+        'countries' =>Country::all(),
+	'restrictions' => Restriction::all(),
+    ];
+})->middleware('auth:api');
+
+
+Route::get('/stats/today', [StatsController::class, 'today']);
+Route::post('/stats/filtered', [StatsController::class, 'filtered']);
+Route::post('/stats/donut', [StatsController::class, 'donut']);

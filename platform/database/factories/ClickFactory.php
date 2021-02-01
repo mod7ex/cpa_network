@@ -13,22 +13,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ClickFactory extends Factory
 {
-    private function getRandom($class)
-    {
-        return $class::raw(function ($collection) {
-            return $collection->aggregate([
-                [
-                    '$project' => ['_id' => 1]
-                ],
-
-                [
-                    '$sample' => ['size' => 1]
-                ]
-            ]);
-        })->map(function ($classInstance) {
-            return $classInstance->id;
-        })->first();
-    }
+    use FactoryHelper;
 
     /**
      * The name of the factory's corresponding model.
@@ -45,6 +30,8 @@ class ClickFactory extends Factory
     public function definition()
     {
         return [
+            'converted' => $this->faker->boolean(10),
+            // 'user_id' => $this->getRandom(User::class),
             'user_id' => $this->getRandom(User::class),
             'offer_id' => $this->getRandom(Offer::class),
 

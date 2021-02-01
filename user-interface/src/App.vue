@@ -1,12 +1,17 @@
 <template>
-	<div>
+	<!-- <div>
 		<router-link class="mr-8" to="login">Login</router-link>
 		<router-link to="dashboard">dashboard</router-link>
+	</div> -->
+
+	<div class="min-h-screen flex flex-col">
+		<DashboardNav v-if="isLoggedIn" />
+		<HomeNav v-if="!isLoggedIn" />
+		<div class="flex-grow bg-none">
+			<router-view />
+		</div>
+		<Footer />
 	</div>
-	<DashboardNav v-if="isLoggedIn" />
-	<HomeNav v-if="!isLoggedIn" />
-	<router-view />
-	<Footer />
 </template>
 
 <script>

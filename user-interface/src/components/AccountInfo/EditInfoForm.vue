@@ -145,7 +145,7 @@
 		</div>
 
 		<div class="mb-10">
-			<input type="submit" @click.prevent="formIsValid" class="min-w-full text-white cursor-pointer px-2 py-2 shadow-md outline-none bg-gray-900 rounded" value="Sign Up" />
+			<input type="submit" @click.prevent="formIsValid" class="min-w-full text-white cursor-pointer px-2 py-2 shadow-md outline-none bg-gray-900 rounded" value="Update" />
 		</div>
 	</form>
 </template>
