@@ -7,20 +7,50 @@
 </template>
 
 <script>
+	import { mapGetters } from "vuex";
 	import Chart from "chart.js";
 
 	export default {
 		name: "TodayConversions",
 
+		computed: {
+			...mapGetters({ stats: "TODAY_CONVERSIONS" }),
+		},
+
 		methods: {
+			charDeps() {
+				let labels = [],
+					data = [],
+					now = new Date();
+
+				for (let i = 0; i <= now.getHours(); i++) {
+					labels.push(i);
+					let count = 0;
+
+					this.stats.forEach((element) => {
+						if (element.hour === i) {
+							count = element.count;
+						}
+					});
+
+					data.push(count);
+				}
+
+				return {
+					labels: labels,
+					data: data,
+				};
+			},
+
 			renderChart() {
 				let ctx = document.getElementById("TodayConversions");
+				let charDeps = this.charDeps();
 
 				let TodayConversionsChart = new Chart(ctx, {
 					type: "bar",
 
 					data: {
-						labels: ["me", "him", "we", "dfgse", "wdgsetg", "dfgsedg", "dsfgsethe"],
+						labels: charDeps.labels,
 
 						datasets: [
 							{
@@ -33,7 +63,7 @@
 								// steppedLine: true,
 								// showLine: false,
 								// spanGaps: true,
-								data: [13, 50, 66, 44, 95, 70, 100, 52, 22],
+								data: charDeps.data,
 
 								borderColor: "rgb(0, 128, 0)",
 								borderWidth: 1,
@@ -62,8 +92,10 @@
 			},
 		},
 
-		mounted() {
-			this.renderChart();
+		watch: {
+			stats: function(val, oldVal) {
+				this.renderChart();
+			},
 		},
 	};
 </script>

@@ -16,17 +16,17 @@
 
 		<div class="flex justify-center p-3 text-grey-dark">
 			<div class="text-center mr-3 border-r pr-3">
-				<h1 class="text-gray-800 font-black text-xl">Balance: {{ me.balance }}$</h1>
+				<h1 class="text-gray-800 font-black text-xl">Balance: {{ me.balance / 100 }}$</h1>
 			</div>
 
 			<div class="text-center mr-3 border-r pr-3">
 				<h2 class="font-black">Today Clicks</h2>
-				<span>1123</span>
+				<span>{{ today.clicks }}</span>
 			</div>
 
 			<div class="text-center">
 				<h2 class="font-black">Today Conversions</h2>
-				<span>7</span>
+				<span>{{ today.conversions }}</span>
 			</div>
 		</div>
 	</div>
@@ -39,7 +39,7 @@
 		name: "UserCard",
 
 		computed: {
-			...mapGetters({ me: "ME" }),
+			...mapGetters({ me: "ME", today: "TODAY" }),
 		},
 	};
 </script>

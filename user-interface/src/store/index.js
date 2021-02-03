@@ -11,13 +11,24 @@ export default createStore({
 
 		offersFilter: null,
 
+		statsTools: null,
+
 		filteredStats: null,
 		donutStats: null,
+		todayStats: null,
 	},
 
 	mutations: {
 		fillMe(state, me) {
 			state.me = me;
+		},
+
+		fillTodayStats(state, payload) {
+			state.todayStats = payload;
+		},
+
+		fillStatsTools(state, payload) {
+			state.statsTools = payload;
 		},
 
 		fillFilteredStats(state, filteredStats) {
@@ -77,6 +88,10 @@ export default createStore({
 			return state.me ? true : false;
 		},
 
+		STATS_TOOLS(state) {
+			return state.statsTools;
+		},
+
 		ACCESS_TOKEN(state) {
 			return localStorage.getItem("ACCESS_TOKEN");
 		},
@@ -93,8 +108,48 @@ export default createStore({
 			return state.me;
 		},
 
+		TODAY_CONVERSIONS(state) {
+			if (state.todayStats && state.todayStats.length) {
+				return state.todayStats.filter((item) => {
+					if (item.converted) return item;
+				});
+			} else {
+				return null;
+			}
+		},
+
+		TODAY(state) {
+			let today = {
+				clicks: 0,
+				conversions: 0,
+			};
+
+			if (state.todayStats && state.todayStats.length) {
+				state.todayStats.forEach((item) => {
+					today.clicks += item.count;
+					if (item.converted) {
+						today.conversions += item.count;
+					}
+				});
+			}
+
+			return today;
+		},
+
+		TODAY_CLICKS(state) {
+			if (state.todayStats && state.todayStats.length) {
+				return state.todayStats;
+			} else {
+				return null;
+			}
+		},
+
 		FILTERD_STATS(state) {
-			return state.filteredStats;
+			if (state.filteredStats && state.filteredStats.length) {
+				return state.filteredStats;
+			} else {
+				return null;
+			}
 		},
 
 		DONUT_STATS(state) {
@@ -210,6 +265,17 @@ export default createStore({
 				api.defaults.headers.common["Authorization"] = `Bearer ${context.getters.ACCESS_TOKEN}`;
 				api.get("/offersfilter").then((resp) => {
 					context.commit("fillOffersFilter", resp.data);
+					resolve();
+				});
+			});
+		},
+
+		fetchTodayStats(context) {
+			return new Promise((resolve, reject) => {
+				api.defaults.headers.common["Authorization"] = `Bearer ${context.getters.ACCESS_TOKEN}`;
+
+				api.get("/stats/today").then((resp) => {
+					context.commit("fillTodayStats", resp.data);
 					resolve();
 				});
 			});

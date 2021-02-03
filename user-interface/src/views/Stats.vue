@@ -132,6 +132,19 @@
 						filter: this.chartFilter.filter,
 					});
 				}
+
+				this.$store.commit("fillStatsTools", {
+					from: this.chartFilter.from,
+					to: this.chartFilter.to,
+
+					filter: this.chartFilter.filter,
+					by: this.chartFilter.by ? "conversions" : "clicks",
+
+					os: this.chartFilter.o,
+					browser: this.chartFilter.browse,
+					device: this.chartFilter.devic,
+					country: this.chartFilter.country,
+				});
 			},
 		},
 

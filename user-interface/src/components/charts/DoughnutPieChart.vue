@@ -14,7 +14,7 @@
 		name: "DoughnutPieChart",
 
 		computed: {
-			...mapGetters({ stats: "DONUT_STATS" }),
+			...mapGetters({ stats: "DONUT_STATS", tools: "STATS_TOOLS" }),
 		},
 
 		methods: {

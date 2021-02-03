@@ -36,6 +36,12 @@
 		data() {
 			return {};
 		},
+
+		methods: {},
+
+		mounted() {
+			this.$store.dispatch("fetchTodayStats");
+		},
 	};
 </script>
 

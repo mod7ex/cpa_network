@@ -7,20 +7,50 @@
 </template>
 
 <script>
+	import { mapGetters } from "vuex";
 	import Chart from "chart.js";
 
 	export default {
 		name: "TodayClicks",
 
+		computed: {
+			...mapGetters({ stats: "TODAY_CLICKS" }),
+		},
+
 		methods: {
+			charDeps() {
+				let labels = [],
+					data = [],
+					now = new Date();
+
+				for (let i = 0; i <= now.getHours(); i++) {
+					labels.push(i);
+					let count = 0;
+
+					this.stats.forEach((element) => {
+						if (element.hour === i) {
+							count = element.count;
+						}
+					});
+
+					data.push(count);
+				}
+
+				return {
+					labels: labels,
+					data: data,
+				};
+			},
+
 			renderChart() {
 				let ctx = document.getElementById("TodayClicks");
+				let charDeps = this.charDeps();
 
 				let TodayClicksChart = new Chart(ctx, {
 					type: "line",
 
 					data: {
-						labels: ["me", "him", "we", "dfgse", "wdgsetg", "dfgsedg", "dsfgsethe"],
+						labels: charDeps.labels,
 
 						datasets: [
 							{
@@ -34,7 +64,7 @@
 								// showLine: false,
 								// spanGaps: true,
 								lineTension: 0.3,
-								data: [13, 50, 66, 44, 95, 70, 100, 52, 22],
+								data: charDeps.data,
 
 								borderColor: "rgb(0, 0, 128)",
 								borderWidth: 1,
@@ -63,8 +93,10 @@
 			},
 		},
 
-		mounted() {
-			this.renderChart();
+		watch: {
+			stats: function(val, oldVal) {
+				this.renderChart();
+			},
 		},
 	};
 </script>
