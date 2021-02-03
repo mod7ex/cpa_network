@@ -10,10 +10,51 @@ class StatsController extends Controller
 {
     public function today()
     {
-        return Click::select('created_at', 'converted')
-                    ->where('created_at','>', Carbon::today())
-                    ->get()
-                    ->makeVisible(['created_at']);
+        $match = array(
+            'user_id' => auth('api')->user()->id,
+
+            'created_at' => [
+                '$gte' => $this->mongoDate(Carbon::today())
+            ],
+        );
+
+        return Click::raw(function($collection) use ($match) {
+            return $collection->aggregate([
+                [
+                    '$match' => $match
+                ],
+
+                [
+                    '$replaceRoot' => [
+                        'newRoot' => [
+                            '_id' => '$_id',
+                            'converted' => '$converted',
+                            'hour' => ['$hour' => '$created_at'],
+                        ],
+                    ],
+                ],
+
+                [
+                    '$group' => [
+                        '_id' => [
+                            'hour' => '$hour',
+                            'converted' => '$converted'
+                        ],
+                        'count' => ['$sum' => 1]
+                    ]
+                ],
+                
+                [
+                    '$replaceRoot' => [
+                        'newRoot' => [
+                            'converted' => '$_id.converted',
+                            'hour' => '$_id.hour',
+                            'count' => '$count',
+                        ],
+                    ],
+                ],
+            ]);
+        });
     }
 
     /**
@@ -41,10 +82,9 @@ class StatsController extends Controller
 
         foreach(['os', 'browser', 'device', 'country'] as $item){
             if($request->$item){
-                $match['details.' . $item] = $this->mongoId($request->$item);
+                $match['details.' . $item] = $request->$item;
             }
         }
-
 
         return Click::raw(function($collection) use ($match) {
 
@@ -56,20 +96,41 @@ class StatsController extends Controller
                 [
                     '$replaceRoot' => [
                         'newRoot' => [
-                            // '_id' => '$_id',
-                            'created_at' => '$created_at',
+                            '_id' => '$_id',
+                            'hour' => ['$hour' => '$created_at'],
+                            'dayOfMonth' => ['$dayOfMonth' => '$created_at'],
+                            'month' => ['$month' => '$created_at'],
+                            'year' => ['$year' => '$created_at'],
+                        ],
+                    ],
+                ],
+
+                [
+                    '$group' => [
+                        '_id' => [
+                            'hour' => '$hour',
+                            'day' => '$dayOfMonth',
+                            'month' => '$month',
+                            'year' => '$year',
+                        ],
+                        'count' => ['$sum' => 1]
+                    ]
+                    ],
+
+                    [
+                    '$replaceRoot' => [
+                        'newRoot' => [
+                            'hour' => '$_id.hour',
+                            'day' => '$_id.day',
+                            'month' => '$_id.month',
+                            'year' => '$_id.year',
+                            'count' => '$count',
                         ],
                     ],
                 ],
             ]);
 
-        })->map(function($item){
-            //   return Carbon::parse($item->created_at)->hour;
-            //   return Carbon::parse($item->created_at)->day;
-            //   return Carbon::parse($item->created_at)->year;
-            //   return Carbon::parse($item->created_at)->month;
-            return $item->created_at;
-          });
+        });
     }
 
     

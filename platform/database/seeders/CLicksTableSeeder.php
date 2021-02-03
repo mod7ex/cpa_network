@@ -14,6 +14,6 @@ class CLicksTableSeeder extends Seeder
      */
     public function run()
     {
-        Click::factory()->count(300)->create();
+        Click::factory()->count(257)->create();
     }
 }
