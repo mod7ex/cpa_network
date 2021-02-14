@@ -9,11 +9,14 @@ use App\Http\Requests\AdminOfferRequest;
 
 class OfferController extends Controller
 {
+    use MongoHelper;
+
+    
     public function __construct()
     {
-        $this->middleware('auth:admin,api')->only(['index', 'show']);
+        // $this->middleware('auth:admin,api')->only(['index', 'show']);
 
-        $this->middleware('auth:admin')->only(['store', 'update', 'destroy']);
+        // $this->middleware('auth:admin')->only(['store', 'update', 'destroy']);
     }
 
     /**
@@ -23,80 +26,13 @@ class OfferController extends Controller
      */
     public function index()
     {
-        if (Auth::guard('admin')->check()) {
-
-            $this->authorize('viewAny', Offer::class);
-
-            return Offer::all()->makeVisible(['promotion']);
-        } else if (Auth::guard('api')->check()) {
-
-            return Offer::raw(function ($collection) {
-                return $collection->aggregate([
-                    // [
-                    //     '$unwind' => 
-                    //         [
-                    //         'path' => "promotion.promoters",
-                    //         'preserveNullAndEmptyArrays' => true
-                    //     ]
-                    // ],
-
-                    // [
-                    //     '$match' => [ '$or' => [
-
-                    //             [ "promotion.public" => true ],
-
-                    //             [
-                    //                 '$and' => [
-                    //                     [ "promotion.public" => false ],
-
-                    //                     [
-                    //                         '$or' => [
-                    //                             [
-                    //                                 "promotion.hidden" => false,
-                    //                             ],
-                                                
-                    //                             [
-                    //                                 '$and' => [
-                    //                                     [ "promotion.hidden" => true ],
-
-                    //                                     [
-                    //                                         "promotion.promoters" =>
-                    //                                             auth()->user()->id,
-                    //                                     ],
-                    //                                 ],
-                    //                             ],
-                    //                         ],
-                    //                     ],
-                    //                 ],
-                    //             ],
-                    //         ],
-                    //     ]
-                    // ],
-
-                    [
-                        '$project' => [
-                            // '_id' =>  1,
-                            // 'name' =>  1,
-                            // 'payout' =>  1,
-                            // 'promotion' =>  1,
-                            // 'restriction_ids' =>  1,
-                            // 'promotion_method_ids' =>  1,
-                            // 'niche_ids' =>  1,
-                            // 'payout_type_ids' =>  1,
-                            // 'vertical_ids' =>  1,
-                            // 'device_ids' =>  1,
-                            // 'os_ids' =>  1,
-                            // 'browser_ids' =>  1,
-
-
-                            'description' =>  0,
-                            'images' =>  0,
-                            'landing_pages' =>  0,
-                        ],
-                    ],
-                ]);
-            });
-        }
+        return $this->adminOffers();
+                    
+        // if (Auth::guard('admin')->check() && auth('admin')->user()->can('viewAny', Offer::class)) {
+        //     return $this->adminOffers();
+        // } else if (Auth::guard('api')->check()) {
+        //     return $this->userOffers();
+        // }
     }
 
     /**

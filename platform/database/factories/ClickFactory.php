@@ -9,6 +9,7 @@ use App\Models\Country;
 use App\Models\Device;
 use App\Models\Offer;
 use App\Models\Os;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ClickFactory extends Factory
@@ -66,6 +67,8 @@ class ClickFactory extends Factory
                 ...
             }
             */
+
+            // 'created_at' => Carbon::yesterday(),
         ];
     }
 }

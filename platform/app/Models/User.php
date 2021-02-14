@@ -45,6 +45,11 @@ class User extends Authenticatable implements JWTSubject
         return Carbon::create($date)->diffForHumans();
     }
 
+    public function getCreatedAtAttribute($date)
+    {
+        return Carbon::create($date)->diffForHumans();
+    }
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -59,9 +64,9 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Click::class);
     }
 
-    public function Paymentmethod()
+    public function paymentmethod()
     {
-        return $this->hasMany(PaymentMethod::class, 'billing_infos.payment_method_id');
+        return $this->belongsTo(PaymentMethod::class, 'billing_infos.payment_method_id');
     }
 
     public function country()

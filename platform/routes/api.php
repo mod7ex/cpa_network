@@ -55,19 +55,10 @@ Route::group([
 });
 
 
-Route::group([
-
-    'middleware' => 'api',
-    'prefix' => 'admin',
-
-], function () {
-
-    Route::post('login', [App\Http\Controllers\Admins\AuthController::class, 'login']);
-    // Route::post('register', [App\Http\Controllers\Admins\AuthController::class, 'register']);
-    Route::post('logout', [App\Http\Controllers\Admins\AuthController::class, 'logout']);
-    Route::post('refresh', [App\Http\Controllers\Admins\AuthController::class, 'refresh']);
-    Route::post('me', [App\Http\Controllers\Admins\AuthController::class, 'me']);
-});
+// user stats
+Route::get('/stats/today', [StatsController::class, 'today']);
+Route::post('/stats/filtered', [StatsController::class, 'filtered']);
+Route::post('/stats/donut', [StatsController::class, 'donut']);
 
 
 Route::get('offersfilter', function(){
@@ -85,6 +76,39 @@ Route::get('offersfilter', function(){
 })->middleware('auth:api');
 
 
-Route::get('/stats/today', [StatsController::class, 'today']);
-Route::post('/stats/filtered', [StatsController::class, 'filtered']);
-Route::post('/stats/donut', [StatsController::class, 'donut']);
+// ***************** ADMIN
+
+Route::group([
+
+    'middleware' => 'api',
+    'prefix' => 'admin',
+
+], function () {
+
+    Route::post('login', [App\Http\Controllers\Admins\AuthController::class, 'login']);
+    // Route::post('register', [App\Http\Controllers\Admins\AuthController::class, 'register']);
+    Route::post('logout', [App\Http\Controllers\Admins\AuthController::class, 'logout']);
+    Route::post('refresh', [App\Http\Controllers\Admins\AuthController::class, 'refresh']);
+    Route::post('me', [App\Http\Controllers\Admins\AuthController::class, 'me']);
+
+
+    // Admin stats
+    Route::get('/stats/today', [App\Http\Controllers\Admins\StatsController::class, 'today']);
+    Route::get('/stats/top-users', [App\Http\Controllers\Admins\StatsController::class, 'topUsers']);
+    Route::get('/stats/top-offers', [App\Http\Controllers\Admins\StatsController::class, 'topOffers']);
+
+    Route::post('/stats/filtered', [App\Http\Controllers\Admins\StatsController::class, 'filtered']);
+    Route::post('/stats/donut', [App\Http\Controllers\Admins\StatsController::class, 'donut']);
+
+
+    // **********
+    Route::apiResource('offers', OfferController::class);
+
+    Route::apiResource('users', UserController::class);
+
+    Route::apiResource('countries', CountryController::class);
+
+    Route::apiResource('timezones', TimezoneController::class);
+
+    Route::apiResource('paymentmethods', PaymentMethodController::class);
+});

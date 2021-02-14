@@ -10,9 +10,12 @@ use App\Http\Requests\UpdateUserRequest;
 
 class UserController extends Controller
 {
+    use MongoHelper;
+
+
     public function __construct()
     {
-        $this->middleware('auth:admin')->except(['update']);
+        // $this->middleware('auth:admin')->except(['update']);
     }
 
     /**
@@ -22,9 +25,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', User::class);
-
-        return User::all();
+        return $this->usersListing();
     }
 
     /**
@@ -35,21 +36,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create', User::class);
+        // $this->authorize('create', User::class);
         //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        $this->authorize('view', $user);
+        // $this->authorize('view', $user);
 
-        return $user;
+        return User::where('_id', $id)->with('paymentmethod')->with('country')->with('timezone')->get();
     }
 
     /**
@@ -100,7 +101,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $this->authorize('delete', $user);
+        // $this->authorize('delete', $user);
 
         $user->delete();
     }

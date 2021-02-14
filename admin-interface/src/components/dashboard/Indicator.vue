@@ -8,11 +8,11 @@
 				<span class="mr-2">
 					<slot name="value" />
 				</span>
-				<span><i class="fas fa-caret-up"></i></span>
+				<span><i class="fas" :class="{ 'fa-caret-up': state, 'fa-caret-down': !state }"></i></span>
 			</div>
 			<div>
 				<small :class="{ 'text-green-800': state, 'text-red-800': !state }">
-					<i :class="{ 'fas fa-arrow-up': state, 'fas fa-arrow-down': !state }"></i>
+					<i class="fas" :class="{ 'fa-arrow-up': state, 'fa-arrow-down': !state }"></i>
 
 					<slot name="percentage" />% &nbsp;
 				</small>
@@ -37,7 +37,7 @@
 
 <style scoped>
 	.indicator {
-		@apply p-3 m-2 border rounded shadow w-full bg-white flex justify-between items-start text-gray-800 font-bold;
+		@apply p-3 m-2 border rounded shadow-lg w-full bg-white flex justify-between items-start text-gray-800 font-bold;
 	}
 
 	@screen md {

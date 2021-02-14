@@ -1,5 +1,6 @@
 <template>
 	<div class="pt-16 p-3 flex flex-col items-center justify-center">
+		<h1 class="font-black text-2xl mr-3">mourad<span class="text-green-700">CPA</span></h1>
 		<h1 class="text-4xl font-black text-gray-600 mb-16">Admin Login</h1>
 
 		<form class="border shadow bg-white rounded">
@@ -13,9 +14,17 @@
 					<input type="text" id="email" />
 				</div>
 
-				<div class="mb-6 input-field">
+				<div class="mb-12 input-field">
 					<label for="password">Password</label>
 					<input type="password" id="password" />
+				</div>
+
+				<div class="my-6">
+					<input type="submit" value="Login" @submit.prevent="" class="bg-gray-600 text-white p-3 rounded w-full font-black cursor-pointer focus:outline-none hover:opacity-75" />
+				</div>
+
+				<div class="mt-6 text-center">
+					<small class="text-gray-600">In case you forgot your credentials please get in touch with your Boss</small>
 				</div>
 			</div>
 		</form>

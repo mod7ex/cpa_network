@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 class StatsController extends Controller
 {
+    // User Stats
+
     public function today()
     {
         $match = array(
