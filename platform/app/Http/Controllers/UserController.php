@@ -50,7 +50,7 @@ class UserController extends Controller
     {
         // $this->authorize('view', $user);
 
-        return User::where('_id', $id)->with('paymentmethod')->with('country')->with('timezone')->get();
+        return User::where('_id', $id)->with('paymentmethod')->with('country')->with('timezone')->first();
     }
 
     /**

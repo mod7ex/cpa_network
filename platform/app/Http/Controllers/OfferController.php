@@ -53,20 +53,45 @@ class OfferController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Offer  $offer
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Offer $offer)
+    public function show($id)
     {
+        return Offer::where('_id', $id)->first();
 
-        if (Auth::guard('admin')->check()) {
-            
-            $this->authorize('view', $offer);
-            return $offer->makeVisible(['promotion']);
-        } else if (Auth::guard('api')->check()) {
+        // return Offer::where('_id', $id)
+        //             ->with('restrictions')
+        //             ->with('promotionmethods')
+        //             ->with('niches')
+        //             ->with('payouttypes')
+        //             ->with('verticals')
+        //             ->with('devices')
+        //             ->with('oss')
+        //             ->with('browsers')
+        //             ->with('countries')
+        //             ->first()->makeHidden(array(
+        //                 'restriction_ids',
+        //                 'promotion_method_ids',
+        //                 'niche_ids',
+        //                 'payout_type_ids',
+        //                 'vertical_ids',
+        //                 'device_ids',
+        //                 'os_ids',
+        //                 'browser_ids',
+        //                 'country_ids'
+        //             ));
 
-            return $offer;
-        }
+        // return $offer->makeVisible(['promotion']);
+
+        // if (Auth::guard('admin')->check()) {
+
+        //     $this->authorize('view', $offer);
+        //     return $offer->makeVisible(['promotion']);
+        // } else if (Auth::guard('api')->check()) {
+
+        //     return $offer;
+        // }
     }
 
 

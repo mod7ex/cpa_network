@@ -82,11 +82,21 @@
 		},
 
 		computed: {
-			...mapGetters({ offers: "OFFERS" }),
+			...mapGetters({ offers: "OFFERS", filter: "FILTER" }),
 		},
 
 		mounted() {
-			this.$store.dispatch("fetchOffers");
+			if (!this.offers) {
+				this.$store.dispatch("fetchOffers").then(() => {
+					console.log(this.offers);
+				});
+			}
+
+			if (!this.filter) {
+				this.$store.dispatch("fetchOffersFilter").then(() => {
+					console.log(this.filter);
+				});
+			}
 		},
 	};
 </script>

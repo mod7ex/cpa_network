@@ -111,4 +111,19 @@ Route::group([
     Route::apiResource('timezones', TimezoneController::class);
 
     Route::apiResource('paymentmethods', PaymentMethodController::class);
+
+
+    Route::get('offersfilter', function(){
+        return [
+            'promotion_methods' =>PromotionMethod::all(),
+            'niches' =>Niche::all(),
+            'payout_types' =>PayoutType::all(),
+            'verticals' =>Vertical::all(),
+            'devices' =>Device::all(),
+            'oss' =>Os::all(),
+            'browsers' =>Browser::all(),
+            'countries' =>Country::all(),
+            'restrictions' => Restriction::all(),
+        ];
+    });
 });
