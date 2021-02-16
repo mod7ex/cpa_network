@@ -64,7 +64,7 @@ Trait MongoHelper
     }
 
     protected function userOffers(){
-        return Offer::all()->makeVisible(['promotion', 'created_at', 'updated_at']);
+        return Offer::all();
 
     }
 

@@ -112,7 +112,7 @@
 		},
 
 		methods: {
-			perf(yesterday, today) {
+			perf(today, yesterday) {
 				if (yesterday === 0) {
 					if (today === 0) {
 						return {

@@ -68,7 +68,7 @@ class ClickFactory extends Factory
             }
             */
 
-            // 'created_at' => Carbon::yesterday(),
+            'created_at' => Carbon::yesterday(),
         ];
     }
 }

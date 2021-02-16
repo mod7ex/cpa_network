@@ -58,29 +58,7 @@ class OfferController extends Controller
      */
     public function show($id)
     {
-        return Offer::where('_id', $id)->first();
-
-        // return Offer::where('_id', $id)
-        //             ->with('restrictions')
-        //             ->with('promotionmethods')
-        //             ->with('niches')
-        //             ->with('payouttypes')
-        //             ->with('verticals')
-        //             ->with('devices')
-        //             ->with('oss')
-        //             ->with('browsers')
-        //             ->with('countries')
-        //             ->first()->makeHidden(array(
-        //                 'restriction_ids',
-        //                 'promotion_method_ids',
-        //                 'niche_ids',
-        //                 'payout_type_ids',
-        //                 'vertical_ids',
-        //                 'device_ids',
-        //                 'os_ids',
-        //                 'browser_ids',
-        //                 'country_ids'
-        //             ));
+        return Offer::where('_id', $id)->first()->makeVisible('promotion', 'updated_at');
 
         // return $offer->makeVisible(['promotion']);
 

@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Jenssegers\Mongodb\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Offer extends Model
 {
@@ -12,6 +13,12 @@ class Offer extends Model
     // protected $fillable = [];
 
     protected $guarded = [];
+
+    protected $hidden = [
+        'updated_at',
+        'created_at',
+        'promotion'
+    ];
 
     public function scopePublic($query)
     {
@@ -23,11 +30,10 @@ class Offer extends Model
         return $query->where('promotion.public', false);
     }
 
-    protected $hidden = [
-        'updated_at',
-        'created_at',
-        'promotion'
-    ];
+    public function getUpdatedAtAttribute($date)
+    {
+        return Carbon::create($date)->diffForHumans();
+    }
 
     public function clicks()
     {

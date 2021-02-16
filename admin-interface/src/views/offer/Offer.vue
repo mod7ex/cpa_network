@@ -5,8 +5,9 @@
 		<div class="w-full px-4">
 			<div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-200 border-0">
 				<div class="rounded-t bg-white mb-0 px-6 py-6">
-					<div class="text-center">
+					<div class="flex justify-between items-center px-6">
 						<h6 class="text-gray-800 text-xl font-bold"><i class="fab fa-buffer mr-2"></i>Offer Details</h6>
+						<button class="bg-purple-700 p-2 rounded text-white font-black shadow focus:outline-none"><i class="fas fa-chart-pie mr-3"></i> view stats</button>
 					</div>
 				</div>
 
@@ -36,6 +37,28 @@
 										<option value="">ght.com</option>
 										<option value="">modalso.me</option>
 										<option value="">tryit4free.co</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="px-4 max-w-lg">
+								<div class="w-full mb-3">
+									<label for="domain" class="block uppercase text-gray-700 text-xs font-bold mb-2"> public offer </label>
+									<select name="" id="domain" class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150">
+										<option value="true" :selected="offer.promotion.public">offer is public</option>
+										<option value="false" :selected="offer.promotion.public">offer is not public</option>
+									</select>
+								</div>
+							</div>
+
+							<!--  -->
+
+							<div class="px-4 max-w-lg" v-if="!offer.promotion.public">
+								<div class="w-full mb-3">
+									<label for="domain" class="block uppercase text-gray-700 text-xs font-bold mb-2"> hidden offer </label>
+									<select name="" id="domain" class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150">
+										<option value="true" :selected="offer.promotion.hidden">offer is hidden</option>
+										<option value="false" :selected="offer.promotion.hidden">offer is not hidden</option>
 									</select>
 								</div>
 							</div>
@@ -258,6 +281,8 @@
 								</div>
 							</div>
 						</div>
+
+						<hr class="mt-6 border-2 border-gray-400" />
 
 						<div class="flex items-center justify-center mt-3">
 							<input @click.prevent="saveOffer" type="submit" class="bg-gray-700 text-gray-100 rounded cursor-pointer p-2 px-6" value="Save changes" />

@@ -12,9 +12,9 @@
 
 					<router-link class="nav-item" :to="{ name: 'Users' }"><i class="fas fa-users mr-2"></i>Users</router-link>
 
-					<router-link class="nav-item" :to="{ name: 'Login' }">Login</router-link>
-
 					<router-link class="nav-item" :to="{ name: 'Settings' }"><i class="fas fa-cogs mr-2"></i>Settings</router-link>
+
+					<router-link class="nav-item" :to="{}"><i class="fas fa-plus-square mr-2"></i>add offer</router-link>
 
 					<router-link class="nav-item" :to="{ name: 'Login' }"><i class="fas fa-sign-out-alt mr-2"></i>Log Out</router-link>
 				</div>
